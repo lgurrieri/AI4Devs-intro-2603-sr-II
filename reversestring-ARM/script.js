@@ -35,6 +35,18 @@ btnReverse.addEventListener("click", () => {
     resultBox.classList.add("visible");
 });
 
+// Mostrar u ocultar el botón según la longitud del input
+inputText.addEventListener("input", () => {
+    const length = inputText.value.length;
+    if (length >= 3) {
+        btnReverse.classList.add("visible");
+    } else {
+        btnReverse.classList.remove("visible");
+        resultBox.classList.remove("visible");
+        emptyMsg.classList.remove("visible");
+    }
+});
+
 // Invertir también al presionar Enter en el input
 inputText.addEventListener("keydown", (e) => {
     if (e.key === "Enter") btnReverse.click();

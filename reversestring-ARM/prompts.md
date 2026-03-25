@@ -17,3 +17,7 @@ Para la implementación toma como base esta plantilla de html:
 ```
 
 Coloca toda la lógica en el archivo script.js.
+
+
+# Segundo prompt
+Modifica la implementación de forma que solo aparezca el botón cuando hayan 3 o más caracteres.
