@@ -13,8 +13,6 @@
             --bg: #f4f1eb;
             --surface: #ffffff;
             --accent: #1a1aff;
-            --accent-dark: #0000cc;
-            --muted: #6b6b6b;
             --text: #111111;
             --copy-bg: #4a4a4a;
             --copy-hover: #2a2a2a;
@@ -55,16 +53,7 @@
             line-height: 1.1;
         }
 
-        h1 span {
-            color: var(--accent);
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-            margin-bottom: 1.4rem;
-        }
+        h1 span { color: var(--accent); }
 
         input[type="text"] {
             width: 100%;
@@ -84,50 +73,23 @@
             box-shadow: 0 0 0 3px rgba(26,26,255,0.1);
         }
 
-        input[type="text"]::placeholder {
-            color: #aaa;
-        }
-
-        .btn-reverse {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            border-radius: var(--radius);
-            padding: 0.75rem 1.5rem;
-            font-family: 'Syne', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            letter-spacing: 0.01em;
-        }
-
-        .btn-reverse:hover { background: var(--accent-dark); }
-        .btn-reverse:active { transform: scale(0.97); }
-
-        .btn-reverse svg {
-            width: 16px; height: 16px;
-            transition: transform 0.4s ease;
-        }
-
-        .btn-reverse:hover svg { transform: rotate(180deg); }
+        input[type="text"]::placeholder { color: #aaa; }
 
         .result-box {
-            margin-top: 1.6rem;
+            margin-top: 1.4rem;
             padding: 1.1rem 1.2rem;
             background: var(--result-bg);
             border: 1.5px solid var(--result-border);
             border-radius: var(--radius);
-            display: none;
             flex-direction: column;
             gap: 1rem;
-            animation: fadeIn 0.3s ease;
+            display: none;
         }
 
-        .result-box.visible { display: flex; }
+        .result-box.visible {
+            display: flex;
+            animation: fadeIn 0.25s ease;
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(6px); }
@@ -148,7 +110,10 @@
             color: var(--text);
             word-break: break-all;
             letter-spacing: 0.02em;
+            transition: opacity 0.1s ease;
         }
+
+        .result-text.updating { opacity: 0.4; }
 
         .btn-copy {
             display: inline-flex;
@@ -168,56 +133,24 @@
 
         .btn-copy:hover { background: var(--copy-hover); }
         .btn-copy:active { transform: scale(0.97); }
-
         .btn-copy svg { width: 14px; height: 14px; }
-
-        .btn-copy.copied {
-            background: #22a85a;
-        }
-
-        .btn-reverse {
-            display: none;
-        }
-
-        .btn-reverse.visible {
-            display: inline-flex;
-            animation: fadeIn 0.2s ease;
-        }
-
-        .empty-msg {
-            font-size: 0.85rem;
-            color: #c0392b;
-            margin-top: 0.4rem;
-            display: none;
-        }
-
-        .empty-msg.visible { display: block; }
+        .btn-copy.copied { background: #22a85a; }
     </style>
 </head>
 <body>
     <div class="card">
         <h1>Reverse <span>String</span></h1>
 
-        <div class="input-group">
-            <input type="text" id="inputText" placeholder="Hello, welcome to AI4Devs" />
-        </div>
-
-        <p class="empty-msg" id="emptyMsg">⚠ Please enter some text first.</p>
-
-        <button class="btn-reverse" id="btnReverse">
-            Reverse
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/>
-                <path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/>
-            </svg>
-        </button>
+        <input type="text" id="inputText" placeholder="Hello, welcome to AI4Devs" />
 
         <div class="result-box" id="resultBox">
             <span class="result-label">Result</span>
             <span class="result-text" id="resultText"></span>
             <button class="btn-copy" id="btnCopy">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2"/>
+                    <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
                 </svg>
                 Copy
             </button>

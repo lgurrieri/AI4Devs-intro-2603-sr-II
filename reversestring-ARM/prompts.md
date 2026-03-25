@@ -21,3 +21,11 @@ Coloca toda la lógica en el archivo script.js.
 
 # Segundo prompt
 Modifica la implementación de forma que solo aparezca el botón cuando hayan 3 o más caracteres.
+
+# Tercer propmpt
+Ahora vuelve a modificar la implementación haciendo que la cadena se actualice en tiempo real a medida que se agregan caracteres, de manera que ya no sea necesario el botón.
+
+# Chatbot utilizado
+Claude 
+## Url del chat
+ https://claude.ai/chat/dead9f5a-a19a-4b2b-8f47-804e4edbf838

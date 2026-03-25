@@ -1,6 +1,6 @@
 /**
  * Reverse String — script.js
- * Invierte el orden de una cadena alfanumérica.
+ * Actualiza el resultado en tiempo real a medida que el usuario escribe.
  */
 
 /**
@@ -14,45 +14,30 @@ function reverseString(str) {
 
 // ── Referencias al DOM ────────────────────────────────────────────────────────
 const inputText = document.getElementById("inputText");
-const btnReverse = document.getElementById("btnReverse");
-const btnCopy    = document.getElementById("btnCopy");
 const resultBox  = document.getElementById("resultBox");
 const resultText = document.getElementById("resultText");
-const emptyMsg   = document.getElementById("emptyMsg");
+const btnCopy    = document.getElementById("btnCopy");
 
-// ── Evento: invertir cadena ───────────────────────────────────────────────────
-btnReverse.addEventListener("click", () => {
-    const value = inputText.value.trim();
+// ── Actualización en tiempo real ──────────────────────────────────────────────
+inputText.addEventListener("input", () => {
+    const value = inputText.value;
 
-    if (!value) {
-        emptyMsg.classList.add("visible");
+    if (value.length === 0) {
         resultBox.classList.remove("visible");
         return;
     }
 
-    emptyMsg.classList.remove("visible");
-    resultText.textContent = reverseString(value);
+    // Pequeño pulso visual al actualizar
+    resultText.classList.add("updating");
+    setTimeout(() => {
+        resultText.textContent = reverseString(value);
+        resultText.classList.remove("updating");
+    }, 80);
+
     resultBox.classList.add("visible");
 });
 
-// Mostrar u ocultar el botón según la longitud del input
-inputText.addEventListener("input", () => {
-    const length = inputText.value.length;
-    if (length >= 3) {
-        btnReverse.classList.add("visible");
-    } else {
-        btnReverse.classList.remove("visible");
-        resultBox.classList.remove("visible");
-        emptyMsg.classList.remove("visible");
-    }
-});
-
-// Invertir también al presionar Enter en el input
-inputText.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") btnReverse.click();
-});
-
-// ── Evento: copiar resultado ──────────────────────────────────────────────────
+// ── Copiar resultado ──────────────────────────────────────────────────────────
 btnCopy.addEventListener("click", () => {
     const text = resultText.textContent;
     if (!text) return;
