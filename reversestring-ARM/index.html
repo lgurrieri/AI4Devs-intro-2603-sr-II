@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse String</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #f4f1eb;
+            --surface: #ffffff;
+            --accent: #1a1aff;
+            --accent-dark: #0000cc;
+            --muted: #6b6b6b;
+            --text: #111111;
+            --copy-bg: #4a4a4a;
+            --copy-hover: #2a2a2a;
+            --border: #d0ccc4;
+            --result-bg: #eef0ff;
+            --result-border: #c0c8ff;
+            --radius: 10px;
+            --shadow: 0 2px 16px rgba(0,0,0,0.08);
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'DM Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 2.8rem 2.4rem 2.4rem;
+            width: 100%;
+            max-width: 560px;
+            border: 1px solid var(--border);
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.03em;
+            margin-bottom: 1.6rem;
+            line-height: 1.1;
+        }
+
+        h1 span {
+            color: var(--accent);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin-bottom: 1.4rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 1rem;
+            color: var(--text);
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(26,26,255,0.1);
+        }
+
+        input[type="text"]::placeholder {
+            color: #aaa;
+        }
+
+        .btn-reverse {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.75rem 1.5rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-reverse:hover { background: var(--accent-dark); }
+        .btn-reverse:active { transform: scale(0.97); }
+
+        .btn-reverse svg {
+            width: 16px; height: 16px;
+            transition: transform 0.4s ease;
+        }
+
+        .btn-reverse:hover svg { transform: rotate(180deg); }
+
+        .result-box {
+            margin-top: 1.6rem;
+            padding: 1.1rem 1.2rem;
+            background: var(--result-bg);
+            border: 1.5px solid var(--result-border);
+            border-radius: var(--radius);
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .result-box.visible { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .result-text {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.15rem;
+            color: var(--text);
+            word-break: break-all;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: var(--copy-bg);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.6rem 1.1rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            align-self: flex-start;
+        }
+
+        .btn-copy:hover { background: var(--copy-hover); }
+        .btn-copy:active { transform: scale(0.97); }
+
+        .btn-copy svg { width: 14px; height: 14px; }
+
+        .btn-copy.copied {
+            background: #22a85a;
+        }
+
+        .empty-msg {
+            font-size: 0.85rem;
+            color: #c0392b;
+            margin-top: 0.4rem;
+            display: none;
+        }
+
+        .empty-msg.visible { display: block; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Reverse <span>String</span></h1>
+
+        <div class="input-group">
+            <input type="text" id="inputText" placeholder="Hello, welcome to AI4Devs" />
+        </div>
+
+        <p class="empty-msg" id="emptyMsg">⚠ Please enter some text first.</p>
+
+        <button class="btn-reverse" id="btnReverse">
+            Reverse
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/>
+                <path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/>
+            </svg>
+        </button>
+
+        <div class="result-box" id="resultBox">
+            <span class="result-label">Result</span>
+            <span class="result-text" id="resultText"></span>
+            <button class="btn-copy" id="btnCopy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                </svg>
+                Copy
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
